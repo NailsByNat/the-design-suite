@@ -21,28 +21,37 @@ const portfolioSites = [
     name:     "Nails by Nat",
     category: "Beauty & Wellness",
     desc:     "Nail salon with custom paint drip hero, booking flow & service gallery.",
-    url:      "https://nails-by-nat-one.vercel.app",
+    url:      "https://codesandbox.io",   // replace with actual published URLs
     color:    "#FFF0F6",
     accent:   "#FF4FA8",
     emoji:    "💅",
   },
   {
+    name:     "Ink'd Auto",
+    category: "Automotive",
+    desc:     "Custom car paint shop with bold street energy & quote request system.",
+    url:      "https://codesandbox.io",
+    color:    "#F0EDE8",
+    accent:   "#FF7200",
+    emoji:    "🔥",
+  },
+  {
+    name:     "Lumière Nails",
+    category: "Luxury Beauty",
+    desc:     "Elegant luxury nail studio with editorial design & appointment booking.",
+    url:      "https://codesandbox.io",
+    color:    "#FDF8F0",
+    accent:   "#C9916A",
+    emoji:    "✨",
+  },
+  {
     name:     "MK Bookkeeping Co.",
     category: "Finance & Business",
-    desc:     "Professional bookkeeping site with services, process & consultation booking.",
-    url:      "https://mkbookkeeping.github.io/mkbookkeepingco/",
+    desc:     "Professional bookkeeping site with pricing packages & client portal.",
+    url:      "https://codesandbox.io",
     color:    "#F0F4EE",
     accent:   "#6A9870",
     emoji:    "📊",
-  },
-  {
-    name:     "Kayla's Kreations",
-    category: "E-Commerce Boutique",
-    desc:     "Online boutique for fashion, accessories & electronics.",
-    url:      "https://kaylas-kreations.github.io/Kaylas-kreations/",
-    color:    "#F5F0FF",
-    accent:   "#9B6ED4",
-    emoji:    "🛍️",
   },
 ];
 
@@ -149,8 +158,9 @@ export default function TheDesignSuite() {
   const [openFaq, setOpenFaq] = useState(null);
   const [form, setForm]     = useState({ name:"", email:"", business:"", service:"", message:"" });
   const [sent, setSent]     = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const nav = p => { setPage(p); window.scrollTo(0,0); };
+  const nav = p => { setPage(p); setMenuOpen(false); window.scrollTo(0,0); };
   const upd = (k,v) => setForm(p=>({...p,[k]:v}));
 
   return (
@@ -204,35 +214,84 @@ export default function TheDesignSuite() {
 
         .shimmer { background:linear-gradient(90deg,${C.gold},${C.gold2},${C.champagne},${C.gold}); background-size:300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:sh 5s linear infinite; }
         @keyframes sh { from{background-position:0%} to{background-position:300%} }
+
+        /* HAMBURGER */
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; border:none; background:transparent; }
+        .hamburger span { display:block; width:20px; height:1.5px; background:${C.text}; border-radius:2px; transition:all .3s; }
+        .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+        /* MOBILE MENU */
+        .mob-menu { display:none; position:fixed; top:70px; left:0; right:0; background:rgba(253,250,245,.98); backdrop-filter:blur(24px); border-bottom:1px solid ${C.border}; flex-direction:column; padding:16px 20px 24px; gap:4px; z-index:199; }
+        .mob-menu.open { display:flex; }
+        .mob-menu .ml { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:${C.muted}; padding:14px 16px; cursor:pointer; border:none; background:transparent; text-align:left; width:100%; transition:color .2s; }
+        .mob-menu .ml:hover { color:${C.text}; }
+        .mob-menu .ml.act { color:${C.gold}; }
+        .mob-menu .ml.cta { background:${C.dark}; color:#fff; margin-top:8px; text-align:center; }
+        .mob-menu .ml.cta:hover { background:${C.gold}; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+          .nav-links { display:none !important; }
+          .hamburger { display:flex !important; }
+          .hero-stat-cards { display:none !important; }
+          .hero-watermark { display:none !important; }
+          .hero-pad { padding:80px 20px 60px !important; }
+          .two-col { grid-template-columns:1fr !important; }
+          .three-col { grid-template-columns:1fr !important; }
+          .four-col { grid-template-columns:repeat(2,1fr) !important; }
+          .sec-pad { padding-left:20px !important; padding-right:20px !important; }
+          .about-grid { grid-template-columns:1fr !important; }
+          .contact-grid { grid-template-columns:1fr !important; }
+          .dark-grid { grid-template-columns:1fr 1fr !important; }
+          .cta-inner { flex-direction:column !important; gap:20px !important; }
+          .carousel-arrows { flex-direction:column !important; align-items:flex-start !important; gap:16px !important; }
+          .footer-inner { flex-direction:column !important; align-items:center !important; text-align:center !important; gap:12px !important; }
+          .nav-pad { padding:0 20px !important; }
+          .svc-grid { grid-template-columns:1fr !important; }
+          .proc-grid { grid-template-columns:1fr 1fr !important; }
+        }
       `}</style>
 
       {/* ── NAV ── */}
-      <nav style={{ position:"sticky", top:0, zIndex:200, background:`${C.bg}F8`, backdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}`, padding:"0 64px", display:"flex", alignItems:"center", justifyContent:"space-between", height:70 }}>
+      <nav className="nav-pad" style={{ position:"sticky", top:0, zIndex:200, background:`${C.bg}F8`, backdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}`, padding:"0 64px", display:"flex", alignItems:"center", justifyContent:"space-between", height:70 }}>
         <div onClick={()=>nav("home")} style={{ cursor:"pointer" }}>
           <div className="cg" style={{ fontSize:22, fontWeight:300, fontStyle:"italic", letterSpacing:1, lineHeight:1 }}>
             The Design Suite
           </div>
           <div className="dm" style={{ fontSize:8, letterSpacing:4, color:C.gold, fontWeight:600, textTransform:"uppercase", marginTop:3 }}>by Makayla</div>
         </div>
-        <div style={{ display:"flex", gap:2, alignItems:"center" }}>
+        <div className="nav-links" style={{ display:"flex", gap:2, alignItems:"center" }}>
           {[["home","Home"],["work","Work"],["services","Services"],["about","About"]].map(([p,l])=>(
             <span key={p} className={`nl ${page===p?"act":""}`} onClick={()=>nav(p)}>{l}</span>
           ))}
           <div style={{ width:1, height:18, background:C.border, margin:"0 12px" }} />
           <button className="btn-dark" style={{ padding:"10px 24px", fontSize:10 }} onClick={()=>nav("contact")}>Let's Work Together</button>
         </div>
+        <button className={`hamburger ${menuOpen?"open":""}`} onClick={()=>setMenuOpen(!menuOpen)}>
+          <span /><span /><span />
+        </button>
       </nav>
+
+      {/* Mobile menu */}
+      <div className={`mob-menu ${menuOpen?"open":""}`}>
+        {[["home","Home"],["work","Work"],["services","Services"],["about","About"]].map(([p,l])=>(
+          <button key={p} className={`ml ${page===p?"act":""}`} onClick={()=>nav(p)}>{l}</button>
+        ))}
+        <button className="ml cta" onClick={()=>nav("contact")}>Let's Work Together</button>
+      </div>
 
       {/* ══ HOME ══ */}
       {page==="home" && (
         <div>
           {/* HERO */}
-          <div style={{ position:"relative", minHeight:"90vh", display:"flex", alignItems:"center", overflow:"hidden", padding:"100px 64px" }}>
+          <div style={{ position:"relative", minHeight:"90vh", display:"flex", alignItems:"center", overflow:"hidden", padding:"clamp(60px,8vw,100px) clamp(16px,5vw,64px)" }}>
             {/* background texture */}
             <div style={{ position:"absolute", inset:0, background:`radial-gradient(ellipse at 70% 50%, ${C.champagne}50 0%, transparent 60%)` }} />
             <div style={{ position:"absolute", top:0, right:0, width:"45%", height:"100%", background:`linear-gradient(160deg,${C.warm}60,transparent)`, borderLeft:`1px solid ${C.border}` }} />
             {/* decorative script watermark */}
-            <div style={{ position:"absolute", right:-20, top:"50%", transform:"translateY(-50%) rotate(90deg)", fontFamily:"'Cormorant Garamond',serif", fontSize:160, fontWeight:300, fontStyle:"italic", color:C.champagne, opacity:.4, letterSpacing:8, userSelect:"none", whiteSpace:"nowrap" }}>
+            <div style={{ position:"absolute", right:-20, top:"50%", transform:"translateY(-50%) rotate(90deg)", fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(60px,12vw,160px)", fontWeight:300, fontStyle:"italic", color:C.champagne, opacity:.4, letterSpacing:8, userSelect:"none", whiteSpace:"nowrap" }}>
               The Design Suite
             </div>
 
@@ -279,7 +338,7 @@ export default function TheDesignSuite() {
           </div>
 
           {/* WORK PREVIEW */}
-          <div style={{ padding:"100px 64px" }}>
+          <div style={{ padding:"clamp(60px,8vw,100px) clamp(16px,5vw,64px)" }}>
             <div style={{ maxWidth:1100, margin:"0 auto" }}>
               <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginBottom:56, flexWrap:"wrap", gap:16 }}>
                 <div>
@@ -297,9 +356,9 @@ export default function TheDesignSuite() {
           </div>
 
           {/* ABOUT STRIP */}
-          <div style={{ background:C.dark, padding:"100px 64px", position:"relative", overflow:"hidden" }}>
+          <div style={{ background:C.dark, padding:"clamp(60px,8vw,100px) clamp(16px,5vw,64px)", position:"relative", overflow:"hidden" }}>
             <div style={{ position:"absolute", top:-100, right:-100, width:400, height:400, borderRadius:"50%", background:`radial-gradient(circle,${C.gold}20,transparent 70%)` }} />
-            <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
+            <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:48, alignItems:"center" }}>
               <div>
                 <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:20, display:"flex", alignItems:"center", gap:12 }}>
                   <div style={{ width:24, height:1, background:C.gold }} />About Me
@@ -312,7 +371,7 @@ export default function TheDesignSuite() {
                 </p>
                 <button className="btn-gold" onClick={()=>nav("about")}>My Full Story →</button>
               </div>
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:12 }}>
                 {[
                   { icon:"💡", title:"Creative First",   desc:"Every design decision is intentional and purposeful." },
                   { icon:"🤝", title:"Client Focused",   desc:"Your vision guides everything I build." },
@@ -330,14 +389,14 @@ export default function TheDesignSuite() {
           </div>
 
           {/* SERVICES PREVIEW */}
-          <div style={{ padding:"100px 64px" }}>
+          <div style={{ padding:"clamp(60px,8vw,100px) clamp(16px,5vw,64px)" }}>
             <div style={{ maxWidth:1100, margin:"0 auto" }}>
               <div style={{ textAlign:"center", marginBottom:60 }}>
                 <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:16 }}>What I Offer</div>
                 <h2 className="cg" style={{ fontSize:56, fontWeight:300 }}>Services</h2>
                 <div style={{ width:48, height:1, background:C.gold, margin:"20px auto 0" }} />
               </div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:1, border:`1px solid ${C.border}` }}>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:1, border:`1px solid ${C.border}` }}>
                 {services.map((s,i)=>(
                   <div key={i} className="svc-card" style={{ borderRadius:0, borderColor:"transparent" }}>
                     <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:28, color:C.gold, marginBottom:20, fontStyle:"italic" }}>{s.icon}</div>
@@ -362,7 +421,7 @@ export default function TheDesignSuite() {
           </div>
 
           {/* CTA */}
-          <div style={{ background:C.surface, borderTop:`1px solid ${C.border}`, borderBottom:`1px solid ${C.border}`, padding:"100px 64px", textAlign:"center", position:"relative", overflow:"hidden" }}>
+          <div style={{ background:C.surface, borderTop:`1px solid ${C.border}`, borderBottom:`1px solid ${C.border}`, padding:"clamp(60px,8vw,100px) clamp(16px,5vw,64px)", textAlign:"center", position:"relative", overflow:"hidden" }}>
             <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:500, height:500, borderRadius:"50%", background:`radial-gradient(circle,${C.champagne}80,transparent 70%)` }} />
             <div style={{ position:"relative" }}>
               <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:20 }}>Ready to Begin?</div>
@@ -375,7 +434,7 @@ export default function TheDesignSuite() {
           </div>
 
           {/* FOOTER */}
-          <div style={{ padding:"36px 64px", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16, borderTop:`1px solid ${C.border}` }}>
+          <div style={{ padding:"28px clamp(16px,4vw,64px)", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16, borderTop:`1px solid ${C.border}` }}>
             <div className="cg" style={{ fontSize:18, fontWeight:300, fontStyle:"italic", color:C.muted }}>The Design Suite</div>
             <div className="dm" style={{ fontSize:11, color:C.muted, letterSpacing:.5 }}>© 2026 The Design Suite by Makayla · All Rights Reserved</div>
             <div style={{ display:"flex", gap:8 }}>
@@ -389,7 +448,7 @@ export default function TheDesignSuite() {
 
       {/* ══ WORK ══ */}
       {page==="work" && (
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:"80px 64px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", padding:"60px clamp(16px,5vw,64px)" }}>
           <div className="fu" style={{ marginBottom:64 }}>
             <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:16, display:"flex", alignItems:"center", gap:12 }}>
               <div style={{ width:24, height:1, background:C.gold }} />Portfolio
@@ -414,7 +473,7 @@ export default function TheDesignSuite() {
       {/* ══ SERVICES ══ */}
       {page==="services" && (
         <div>
-          <div style={{ maxWidth:1100, margin:"0 auto", padding:"80px 64px" }}>
+          <div style={{ maxWidth:1100, margin:"0 auto", padding:"60px clamp(16px,5vw,64px)" }}>
             <div className="fu" style={{ marginBottom:64 }}>
               <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:16, display:"flex", alignItems:"center", gap:12 }}>
                 <div style={{ width:24, height:1, background:C.gold }} />Pricing
@@ -453,7 +512,7 @@ export default function TheDesignSuite() {
                 <h2 className="cg" style={{ fontSize:52, fontWeight:300 }}>The <em style={{ fontStyle:"italic", color:C.gold }}>Process</em></h2>
                 <div style={{ width:48, height:1, background:C.gold, margin:"20px auto 0" }} />
               </div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:1, border:`1px solid ${C.border}` }}>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:1, border:`1px solid ${C.border}` }}>
                 {process.map((p,i)=>(
                   <div key={i} style={{ padding:"40px 32px", background:C.card, transition:"all .22s", borderRight: i<3?`1px solid ${C.border}`:"none" }}>
                     <div className="proc-num">{p.num}</div>
@@ -490,8 +549,8 @@ export default function TheDesignSuite() {
 
       {/* ══ ABOUT ══ */}
       {page==="about" && (
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:"80px 64px" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:88, alignItems:"start" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", padding:"60px clamp(16px,5vw,64px)" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:48, alignItems:"start" }}>
             <div className="fu">
               <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:20, display:"flex", alignItems:"center", gap:12 }}>
                 <div style={{ width:24, height:1, background:C.gold }} />About Me
@@ -539,7 +598,7 @@ export default function TheDesignSuite() {
 
       {/* ══ CONTACT ══ */}
       {page==="contact" && (
-        <div style={{ maxWidth:1000, margin:"0 auto", padding:"80px 64px" }}>
+        <div style={{ maxWidth:1000, margin:"0 auto", padding:"60px clamp(16px,5vw,64px)" }}>
           <div className="fu" style={{ marginBottom:56 }}>
             <div className="dm" style={{ fontSize:10, letterSpacing:4, color:C.gold, textTransform:"uppercase", marginBottom:16, display:"flex", alignItems:"center", gap:12 }}>
               <div style={{ width:24, height:1, background:C.gold }} />Get In Touch
@@ -553,7 +612,7 @@ export default function TheDesignSuite() {
             </p>
           </div>
 
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1.5fr", gap:56 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:40 }}>
             <div>
               <div style={{ display:"flex", flexDirection:"column", gap:24, marginBottom:40 }}>
                 {[
@@ -595,7 +654,7 @@ export default function TheDesignSuite() {
               <div style={{ background:C.card, border:`1px solid ${C.border}`, padding:"36px", position:"relative" }}>
                 <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${C.gold},transparent)` }} />
                 <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:12 }}>
                     {[["Full Name","Your name","text",form.name,"name"],["Email","you@email.com","email",form.email,"email"]].map(([l,ph,t,v,k])=>(
                       <div key={k}>
                         <label className="dm" style={{ display:"block", fontSize:9, fontWeight:600, letterSpacing:2.5, textTransform:"uppercase", color:C.muted, marginBottom:8 }}>{l} *</label>
@@ -635,7 +694,7 @@ export default function TheDesignSuite() {
 
       {/* SHARED FOOTER */}
       {page !== "home" && (
-        <div style={{ borderTop:`1px solid ${C.border}`, padding:"36px 64px", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16, marginTop:40 }}>
+        <div style={{ borderTop:`1px solid ${C.border}`, padding:"28px clamp(16px,4vw,64px)", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:16, marginTop:40 }}>
           <div className="cg" style={{ fontSize:18, fontWeight:300, fontStyle:"italic", color:C.muted }}>The Design Suite</div>
           <div className="dm" style={{ fontSize:11, color:C.muted }}>© 2026 The Design Suite by Makayla · All Rights Reserved</div>
           <div style={{ display:"flex", gap:7 }}>
