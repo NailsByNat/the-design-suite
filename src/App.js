@@ -141,7 +141,7 @@ const faqs = [
   { q:"Do I need to know how to code?",      a:"Not at all. I handle every technical detail. You bring your vision — I bring it to life." },
   { q:"What do you need from me to start?",  a:"Just your brand info, any existing assets, and an idea of what you want. We'll figure out the rest together." },
   { q:"Can you redesign my existing site?",  a:"Absolutely. Site refreshes are one of my most popular services. We work with what you have." },
-  { q:"Do you offer payment plans?",         a:"Yes. I offer split payment options so you can get started without paying everything upfront." },
+  { q:"Do you offer payment plans?",         a:"All projects require full payment upfront before work begins. I accept all major payment methods." },
 ];
 
 export default function TheDesignSuite() {
