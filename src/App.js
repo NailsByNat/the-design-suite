@@ -20,38 +20,29 @@ const portfolioSites = [
   {
     name:     "Nails by Nat",
     category: "Beauty & Wellness",
-    desc:     "Nail salon with custom paint drip hero, booking flow & service gallery.",
-    url:      "https://codesandbox.io",   // replace with actual published URLs
+    desc:     "Nail salon with holographic bubble background, booking flow & service gallery.",
+    url:      "https://nails-by-nat-one.vercel.app",
     color:    "#FFF0F6",
     accent:   "#FF4FA8",
     emoji:    "💅",
   },
   {
-    name:     "Ink'd Auto",
-    category: "Automotive",
-    desc:     "Custom car paint shop with bold street energy & quote request system.",
-    url:      "https://codesandbox.io",
-    color:    "#F0EDE8",
-    accent:   "#FF7200",
-    emoji:    "🔥",
-  },
-  {
-    name:     "Lumière Nails",
-    category: "Luxury Beauty",
-    desc:     "Elegant luxury nail studio with editorial design & appointment booking.",
-    url:      "https://codesandbox.io",
-    color:    "#FDF8F0",
-    accent:   "#C9916A",
-    emoji:    "✨",
-  },
-  {
     name:     "MK Bookkeeping Co.",
     category: "Finance & Business",
-    desc:     "Professional bookkeeping site with pricing packages & client portal.",
-    url:      "https://codesandbox.io",
+    desc:     "Professional bookkeeping site with services, process & consultation booking.",
+    url:      "https://mkbookkeeping.github.io/mkbookkeepingco/",
     color:    "#F0F4EE",
     accent:   "#6A9870",
     emoji:    "📊",
+  },
+  {
+    name:     "Kayla's Kreations",
+    category: "E-Commerce Boutique",
+    desc:     "Online boutique for fashion, accessories & electronics.",
+    url:      "https://kaylas-kreations.github.io/Kaylas-kreations/",
+    color:    "#F5F0FF",
+    accent:   "#9B6ED4",
+    emoji:    "🛍️",
   },
 ];
 
@@ -82,7 +73,7 @@ function SiteCarousel() {
       </div>
 
       {/* iframe preview */}
-      <div style={{ position:"relative", height:480, background:site.color, border:`1px solid ${C.border}`, borderTop:"none", overflow:"hidden", borderRadius:"0 0 16px 16px" }}>
+      <div style={{ position:"relative", height:"clamp(260px,50vw,480px)", background:site.color, border:`1px solid ${C.border}`, borderTop:"none", overflow:"hidden", borderRadius:"0 0 16px 16px" }}>
         {loading && (
           <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", background:site.color, zIndex:2 }}>
             <div style={{ fontSize:56, marginBottom:16 }}>{site.emoji}</div>
@@ -235,9 +226,8 @@ export default function TheDesignSuite() {
         @media (max-width: 768px) {
           .nav-links { display:none !important; }
           .hamburger { display:flex !important; }
-          .hero-stat-cards { display:none !important; }
+          .stat-cards { display:none !important; }
           .hero-watermark { display:none !important; }
-          .hero-pad { padding:80px 20px 60px !important; }
           .two-col { grid-template-columns:1fr !important; }
           .three-col { grid-template-columns:1fr !important; }
           .four-col { grid-template-columns:repeat(2,1fr) !important; }
@@ -246,11 +236,11 @@ export default function TheDesignSuite() {
           .contact-grid { grid-template-columns:1fr !important; }
           .dark-grid { grid-template-columns:1fr 1fr !important; }
           .cta-inner { flex-direction:column !important; gap:20px !important; }
-          .carousel-arrows { flex-direction:column !important; align-items:flex-start !important; gap:16px !important; }
           .footer-inner { flex-direction:column !important; align-items:center !important; text-align:center !important; gap:12px !important; }
           .nav-pad { padding:0 20px !important; }
           .svc-grid { grid-template-columns:1fr !important; }
           .proc-grid { grid-template-columns:1fr 1fr !important; }
+          .carousel-iframe { height:260px !important; }
         }
       `}</style>
 
@@ -313,12 +303,12 @@ export default function TheDesignSuite() {
               </div>
             </div>
 
-            {/* floating stat cards */}
-            <div className="fu" style={{ position:"absolute", right:80, top:"50%", transform:"translateY(-50%)", display:"flex", flexDirection:"column", gap:14, animationDelay:".3s", zIndex:2 }}>
+            {/* floating stat cards — hidden on mobile */}
+            <div className="fu stat-cards" style={{ position:"absolute", right:80, top:"50%", transform:"translateY(-50%)", display:"flex", flexDirection:"column", gap:14, animationDelay:".3s", zIndex:2 }}>
               {[
-                { num:"4+",   label:"Sites Built",      color:C.gold    },
-                { num:"100%", label:"Custom Design",     color:C.muted   },
-                { num:"3",    label:"Industries",        color:C.gold2   },
+                { num:"4+",   label:"Sites Built",   color:C.gold  },
+                { num:"100%", label:"Custom Design",  color:C.muted },
+                { num:"3",    label:"Industries",     color:C.gold2 },
               ].map((s,i)=>(
                 <div key={i} style={{ background:C.card, border:`1px solid ${C.border}`, padding:"18px 24px", textAlign:"center", boxShadow:"0 8px 32px rgba(0,0,0,.06)", minWidth:130 }}>
                   <div className="cg" style={{ fontSize:36, fontWeight:600, color:s.color, lineHeight:1 }}>{s.num}</div>
@@ -326,6 +316,7 @@ export default function TheDesignSuite() {
                 </div>
               ))}
             </div>
+            <style>{`.stat-cards { display:flex !important; } @media(max-width:768px){.stat-cards{display:none !important;}}`}</style>
           </div>
 
           {/* TICKER */}
