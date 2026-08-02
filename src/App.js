@@ -39,7 +39,7 @@ const portfolioSites = [
     name:     "The Haze Effect",
     category: "Beauty & Wellness",
     desc:     "Mobile nail artistry site with service gallery, booking flow & client reviews.",
-    url:      "https://nails-by-nat-one.vercel.app",
+    url:      "https://thehazeeffect.vercel.app",
     color:    "#FDF0F3",
     accent:   "#C07080",
     emoji:    "💅",
