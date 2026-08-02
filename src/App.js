@@ -18,31 +18,31 @@ const C = {
 // ── LIVE SITE CAROUSEL ───────────────────────────────────
 const portfolioSites = [
   {
-    name:     "Nails by Nat",
+    name:     "Push Dreams Exotic",
+    category: "Luxury Car Rentals",
+    desc:     "Exotic car rental site with live availability checking, booking flow & conflict-free scheduling.",
+    url:      "https://push-dreams-exotic.vercel.app",
+    color:    "#FFF0F0",
+    accent:   "#D90429",
+    emoji:    "🚗",
+  },
+  {
+    name:     "Selph Made",
+    category: "Streetwear & Apparel",
+    desc:     "Bold, industrial-style clothing brand site with shop, story & contact sections.",
+    url:      "https://selph-made.vercel.app",
+    color:    "#F2EFE7",
+    accent:   "#B98A2F",
+    emoji:    "👕",
+  },
+  {
+    name:     "The Haze Effect",
     category: "Beauty & Wellness",
-    desc:     "Nail salon with holographic bubble background, booking flow & service gallery.",
+    desc:     "Mobile nail artistry site with service gallery, booking flow & client reviews.",
     url:      "https://nails-by-nat-one.vercel.app",
-    color:    "#FFF0F6",
-    accent:   "#FF4FA8",
+    color:    "#FDF0F3",
+    accent:   "#C07080",
     emoji:    "💅",
-  },
-  {
-    name:     "MK Bookkeeping Co.",
-    category: "Finance & Business",
-    desc:     "Professional bookkeeping site with services, process & consultation booking.",
-    url:      "https://mkbookkeeping.github.io/mkbookkeepingco/",
-    color:    "#F0F4EE",
-    accent:   "#6A9870",
-    emoji:    "📊",
-  },
-  {
-    name:     "Kayla's Kreations",
-    category: "E-Commerce Boutique",
-    desc:     "Online boutique for fashion, accessories & electronics.",
-    url:      "https://kaylas-kreations.github.io/Kaylas-kreations/",
-    color:    "#F5F0FF",
-    accent:   "#9B6ED4",
-    emoji:    "🛍️",
   },
 ];
 
@@ -149,10 +149,36 @@ export default function TheDesignSuite() {
   const [openFaq, setOpenFaq] = useState(null);
   const [form, setForm]     = useState({ name:"", email:"", business:"", service:"", message:"" });
   const [sent, setSent]     = useState(false);
+  const [sending, setSending] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const nav = p => { setPage(p); setMenuOpen(false); window.scrollTo(0,0); };
   const upd = (k,v) => setForm(p=>({...p,[k]:v}));
+
+  const handleContactSubmit = async () => {
+    if (sending) return
+    setSending(true)
+
+    try {
+      // TODO: replace with The Design Suite's own Formspree endpoint (formspree.io/f/YOUR_ID)
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          Name: form.name,
+          Email: form.email,
+          Business: form.business,
+          Service: form.service,
+          Message: form.message,
+        }),
+      })
+    } catch (err) {
+      console.error('Contact form submission failed:', err)
+    }
+
+    setSending(false)
+    setSent(true)
+  }
 
   return (
     <div style={{ fontFamily:"'DM Sans',sans-serif", background:C.bg, minHeight:"100vh", color:C.text, overflowX:"hidden" }}>
@@ -672,8 +698,8 @@ export default function TheDesignSuite() {
                     <label className="dm" style={{ display:"block", fontSize:9, fontWeight:600, letterSpacing:2.5, textTransform:"uppercase", color:C.muted, marginBottom:8 }}>Tell Me About Your Project *</label>
                     <textarea className="fld" placeholder="What are you building? What's your vision?" value={form.message} onChange={e=>upd("message",e.target.value)} />
                   </div>
-                  <button className="btn-dark" disabled={!form.name||!form.email||!form.service||!form.message} onClick={()=>setSent(true)}>
-                    Send Message ✦
+                  <button className="btn-dark" disabled={!form.name||!form.email||!form.service||!form.message||sending} onClick={handleContactSubmit}>
+                    {sending ? "Sending..." : "Send Message ✦"}
                   </button>
                   <p className="dm" style={{ fontSize:11, color:C.muted, textAlign:"center", fontWeight:300 }}>I respond to every message personally.</p>
                 </div>
