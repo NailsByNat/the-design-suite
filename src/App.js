@@ -44,6 +44,24 @@ const portfolioSites = [
     accent:   "#C07080",
     emoji:    "💅",
   },
+  {
+    name:     "MK Bookkeeping Co.",
+    category: "Finance & Business",
+    desc:     "Professional bookkeeping site with services, process, and consultation booking.",
+    url:      "https://mkbookkeeping.github.io/mkbookkeepingco/",
+    color:    "#F5F0E8",
+    accent:   "#C9A84C",
+    emoji:    "📊",
+  },
+  {
+    name:     "Ink'd Auto",
+    category: "Auto Paint & Detailing",
+    desc:     "Custom paint, wraps, and detailing shop site with service menu, gallery, and quote requests.",
+    url:      "https://inkd-auto.vercel.app",
+    color:    "#0E0F11",
+    accent:   "#1E90FF",
+    emoji:    "🎨",
+  },
 ];
 
 function SiteCarousel() {
