@@ -62,6 +62,15 @@ const portfolioSites = [
     accent:   "#1E90FF",
     emoji:    "🎨",
   },
+  {
+    name:     "Kayla's Kreations",
+    category: "E-Commerce Boutique",
+    desc:     "Online boutique for fashion, accessories & electronics, with shop, cart & contact pages.",
+    url:      "https://kaylas-kreations.github.io/Kaylas-kreations/",
+    color:    "#F5F0FF",
+    accent:   "#9B6ED4",
+    emoji:    "🛍️",
+  },
 ];
 
 function SiteCarousel() {
